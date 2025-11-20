@@ -1,0 +1,156 @@
+import 'package:flutter/material.dart';
+import 'login.dart'; // Pagina de Login
+import 'signup.dart';// Pagina de Sign Up
+import 'gps.dart'; // Pagina de GPS
+
+void main() {
+  runApp(const MainApp());
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const MainPage(),
+    );
+  }
+}
+
+class MainPage extends StatelessWidget {
+  const MainPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Boton Login
+                BotonPersonalizado(
+                  texto: "Login",
+                  colorFondo: const Color(0xFF3333FF),
+                  colorTexto: const Color(0xFFFFFFFF),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
+                    );
+                  },
+                ),
+                const SizedBox(width: 16),
+                // Boton Sign Up
+                BotonPersonalizado(
+                  texto: "Sign Up",
+                  colorFondo: const Color(0xFFFFFFFF),
+                  colorTexto: const Color(0xFF3333FF),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SignUpPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+                // Boton Ver Ubicación
+                BotonPersonalizado(
+                  texto: "Ver Ubicación",
+                  colorFondo: const Color(0xFF3333FF),
+                  colorTexto: const Color(0xFFFFFFFF),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Gps()),
+                    );
+                  },
+                ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                // Botones Circulares
+                BotonCirculo(),
+                SizedBox(width: 16),
+                BotonCirculo(),
+                SizedBox(width: 16),
+                BotonCirculo(),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BotonPersonalizado extends StatelessWidget {
+  final String texto;
+  final VoidCallback? onPressed;
+  final Color colorFondo;
+  final Color colorTexto;
+
+  const BotonPersonalizado({
+    super.key,
+    required this.texto,
+    this.onPressed,
+    this.colorFondo = const Color(0xFF3333FF),
+    this.colorTexto = const Color(0xFFFFFFFF),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+          color: colorFondo,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 0, 0, 0),
+              offset: Offset(0, 4),
+              blurRadius: 6,
+            ),
+          ],
+          border: Border.all(
+            color: const Color(0xFF3333FF),
+            width: 2,
+          ),
+        ),
+        child: Text(
+          texto,
+          style: TextStyle(
+            color: colorTexto,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BotonCirculo extends StatelessWidget {
+  const BotonCirculo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 30,
+      height: 30,
+      decoration: const BoxDecoration(
+        color: Colors.grey,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+}
